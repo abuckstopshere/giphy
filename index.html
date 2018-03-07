@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>giphy</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class = "row" >
+        <div class="col-10 offset-1 mt-3">
+        <div id = "buttonHolder" ></div>
+        </div>
+    </div>
+    <div class = "row">
+        <div class="col-8 offset-2 mt-3">
+        <form id = "gifInput">
+            <label for="gifHere">Wanna see some other gifs? Add your button here!</label>
+            <input type="text" id = "gifHere">
+            <input type="submit" id = "addGif" value = "Add Your Gif Here!">
+        </form>
+        </div>
+    </div>  
+    <div class="row">
+        <div class = "col-12" id = "gifDump"></div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+
+        var originals = [ "Steph Curry" , "Michael Jordan" , "Klay Thompson" , "Draymond Green" , "Kevin Durant" ]
+
+// populates the div of id buttonHolder with the initial buttons
+        function ogButtons () {
+            $("#buttonHolder").empty()
+            for ( i = 0 ; i < originals.length ; i++ ) {
+                $("#buttonHolder").append(`<button class = "btn btn-info btn-md gifButtons">${originals[i]}</button> \n`)
+            }
+        }
+
+        ogButtons()
+
+// takes user input from the gifHere text form and adds it to the array of buttons, then calls the button making function
+        $("#addGif").on("click" , function(event) {
+            event.preventDefault()
+            var addGif = $("#gifHere").val()
+            originals.push(addGif)
+            ogButtons()
+            console.log(originals)
+        })
+
+
+        $(".gifButtons").on("click" , function(event) {
+            event.preventDefault()
+            console.log($("#gifDump"))
+            $("#gifDump").empty()
+            console.log($("#gifDump"))
+            var queryGif = $(this).text()
+            var queryUrl = "https://api.giphy.com/v1/gifs/search?api_key=zi9M3A782sRljdHyAC5XeD6Uzdb5jEtl&q=" + queryGif +"&limit=25&offset=0&rating=R&lang=en"
+            $.ajax({
+                url : queryUrl ,
+                method : "GET"
+            }).then( function (result) {
+                // console.log(result.data)
+                for ( i < 0 ; i < result.data.length ; i++ ) {
+                    // console.log(result.data[i].images.original_still.url)
+                    $("#gifDump").append(`<img src = "${result.data[i].images.original_still.url}" height = "250px" width = "250px"> \n`)
+                }
+            })
+        })
+
+
+    </script>
+  </body>
+</html>
