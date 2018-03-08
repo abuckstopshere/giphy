@@ -40,10 +40,9 @@
 // rewritten as arrow function
         const ogButtons = () => {
             $("#buttonHolder").empty()
-            for ( i = 0 ; i < originals.length ; i++ ) {
+            for ( let i = 0 ; i < originals.length ; i++ ) {
                 $("#buttonHolder").append(`<button class = "btn btn-info btn-md mt-2 gifButtons">${originals[i]}</button> \n`)
             }}
-
 
 // takes user input from the gifHere text form and adds it to the array of buttons, then calls the button making function
         $("#addGif").on("click" , function(event) {
@@ -59,7 +58,7 @@
             event.preventDefault()
             $("#gifDump").empty()
             var queryGif = $(this).text()
-            var queryUrl = `https://api.giphy.com/v1/gifs/search?api_key=zi9M3A782sRljdHyAC5XeD6Uzdb5jEtl&q=${queryGif}&limit=15&offset=0&rating=R&lang=en`
+            var queryUrl = `https://api.giphy.com/v1/gifs/search?api_key=zi9M3A782sRljdHyAC5XeD6Uzdb5jEtl&q=${queryGif}&limit=25&offset=0&rating=R&lang=en`
             $.ajax({
                 url : queryUrl ,
                 method : "GET" 
