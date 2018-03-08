@@ -37,15 +37,13 @@
 
         var originals = [ "Steph Curry" , "Michael Jordan" , "Klay Thompson" , "Draymond Green" , "Kevin Durant" ]
 
-// populates the div of id buttonHolder with the initial buttons
-        function ogButtons () {
+// rewritten as arrow function
+        const ogButtons = () => {
             $("#buttonHolder").empty()
             for ( i = 0 ; i < originals.length ; i++ ) {
-                $("#buttonHolder").append(`<button class = "btn btn-info btn-md gifButtons">${originals[i]}</button> \n`)
-            }
-        }
+                $("#buttonHolder").append(`<button class = "btn btn-info btn-md mt-2 gifButtons">${originals[i]}</button> \n`)
+            }}
 
-        ogButtons()
 
 // takes user input from the gifHere text form and adds it to the array of buttons, then calls the button making function
         $("#addGif").on("click" , function(event) {
@@ -53,29 +51,37 @@
             var addGif = $("#gifHere").val()
             originals.push(addGif)
             ogButtons()
-            console.log(originals)
+            $("#gifHere").val("")
         })
 
 
-        $(".gifButtons").on("click" , function(event) {
+        $("#buttonHolder").on("click" , ".gifButtons" , function(event) {
             event.preventDefault()
-            console.log($("#gifDump"))
             $("#gifDump").empty()
-            console.log($("#gifDump"))
             var queryGif = $(this).text()
-            var queryUrl = "https://api.giphy.com/v1/gifs/search?api_key=zi9M3A782sRljdHyAC5XeD6Uzdb5jEtl&q=" + queryGif +"&limit=25&offset=0&rating=R&lang=en"
+            var queryUrl = `https://api.giphy.com/v1/gifs/search?api_key=zi9M3A782sRljdHyAC5XeD6Uzdb5jEtl&q=${queryGif}&limit=15&offset=0&rating=R&lang=en`
             $.ajax({
                 url : queryUrl ,
-                method : "GET"
+                method : "GET" 
             }).then( function (result) {
-                // console.log(result.data)
-                for ( i < 0 ; i < result.data.length ; i++ ) {
-                    // console.log(result.data[i].images.original_still.url)
-                    $("#gifDump").append(`<img src = "${result.data[i].images.original_still.url}" height = "250px" width = "250px"> \n`)
+                for ( let i = 0 ; i < result.data.length ; i++ ) {
+                    $("#gifDump").append(`<img src = "${result.data[i].images.original_still.url}" data-still = "${result.data[i].images.original_still.url}" data-animate = "${result.data[i].images.original.url}" data-state = "still" height = "250px" width = "250px" class = "gif"> \n`)
                 }
             })
         })
 
+        $("#gifDump").on("click" , ".gif" , function(){
+            const state = $(this).attr("data-state")
+            if ( state === "still") {
+                $(this).attr("src", $(this).attr("data-animate"));
+                $(this).attr("data-state", "animate");
+            } else {
+                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr("data-state", "still");
+            }
+        })
+
+    ogButtons()
 
     </script>
   </body>
