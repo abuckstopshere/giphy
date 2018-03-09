@@ -8,24 +8,27 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
     <div class = "row" >
         <div class="col-10 offset-1 mt-3">
-        <div id = "buttonHolder" ></div>
+            <div id = "buttonHolder" ></div>
         </div>
     </div>
+    <br><br>
     <div class = "row">
-        <div class="col-8 offset-2 mt-3">
+        <div class="col-10 offset-1 mt-3">
         <form id = "gifInput">
             <label for="gifHere">Wanna see some other gifs? Add your button here!</label>
-            <input type="text" id = "gifHere">
+            <input type="text" placeholder = "Good Gifs Only" id = "gifHere">
             <input type="submit" id = "addGif" value = "Add Your Gif Here!">
         </form>
         </div>
     </div>  
     <div class="row">
-        <div class = "col-12" id = "gifDump"></div>
+        <div class = "col-12" id = "gifDump">
+        </div>
     </div>
 
     <!-- Optional JavaScript -->
@@ -35,7 +38,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
 
-        var originals = [ "Steph Curry" , "Michael Jordan" , "Klay Thompson" , "Draymond Green" , "Kevin Durant" ]
+        var originals = [ "Steph Curry" , "Michael Jordan" , "Klay Thompson" , "Draymond Green" , "Kevin Durant" , "Russell Westbrook"]
 
 // rewritten as arrow function
         const ogButtons = () => {
@@ -53,7 +56,7 @@
             $("#gifHere").val("")
         })
 
-
+// when any of the query gif buttons are clicked, generate 25 gifs related to that query
         $("#buttonHolder").on("click" , ".gifButtons" , function(event) {
             event.preventDefault()
             $("#gifDump").empty()
@@ -63,12 +66,18 @@
                 url : queryUrl ,
                 method : "GET" 
             }).then( function (result) {
+                console.log(result)
                 for ( let i = 0 ; i < result.data.length ; i++ ) {
-                    $("#gifDump").append(`<img src = "${result.data[i].images.original_still.url}" data-still = "${result.data[i].images.original_still.url}" data-animate = "${result.data[i].images.original.url}" data-state = "still" height = "250px" width = "250px" class = "gif"> \n`)
-                }
+                    $("#gifDump").append(`<figure display = "inline" width = "350px" ><img src = "${result.data[i].images.original_still.url}" 
+                            data-still = "${result.data[i].images.original_still.url}" 
+                            data-animate = "${result.data[i].images.original.url}" 
+                            data-state = "still" height = "350px" width = "350px" class = "gif"> <figcaption width = "350px" > Rating : ${result.data[i].rating}</figcaption></figure>`)
+                } 
+                    
             })
         })
 
+// when any of the gifs are clicked on, swap its state between still/animated
         $("#gifDump").on("click" , ".gif" , function(){
             const state = $(this).attr("data-state")
             if ( state === "still") {
@@ -80,7 +89,8 @@
             }
         })
 
-    ogButtons()
+// call the original query gif buttons
+        ogButtons()
 
     </script>
   </body>
