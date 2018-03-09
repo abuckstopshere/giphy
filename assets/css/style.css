@@ -1,8 +1,8 @@
 body {
-    background : rgb(112, 128, 144) ;
+    background : rgb( 112 , 128 , 144 ) ;
     color : white ;
     font-size: 1.5em ;
-    text-shadow: -1px 1px .2em rgba(255,255,255,.4), 1px -1px .4em rgba(255,255,255,.4) ;
+    text-shadow: -1px 1px .2em rgba( 255 , 255 , 255 , 0.4 ), 1px -1px .4em rgba( 255 , 255 , 255 , 0.4 ) ;
 }
 
 #buttonHolder {
@@ -15,12 +15,12 @@ body {
 
 .gif {
     margin : 10px ;
-    border : 5px solid rgba(255, 255, 255, 0.5) ;
+    border : 5px solid rgba( 255 , 255 , 255 , 0.5 ) ;
     display: inline ;
 }
 
 .gif:hover {
-    opacity : 0.7
+    opacity : 0.7 ;
 }
 
 #gifDump {
@@ -35,8 +35,9 @@ body {
 }
 
 ::placeholder {
-    color : slategrey;
-    text-align : center;
+    color : slategrey ;
+    text-align : center ;
+    text-shadow: 1px -1px .4em rgba( 0 , 0 , 0 , 0.4 ) ;
 }
 
 #addGif {
@@ -44,6 +45,18 @@ body {
     color : snow ;
     text-shadow: -1px 1px .2em rgba(255,255,255,.4), 1px -1px .4em rgba(255,255,255,.4) ;
     border-radius : 10px ; 
-    border : 2px dashed rgb(255, 255, 255) ;
+    border : 2px dashed rgb( 255 , 255 , 255 ) ;
 }
 
+.list {
+    width: 33% ;
+    display: inline-block ;
+}
+
+.rating {
+    width: 30% ;
+    margin: 10px auto ;
+    text-align: left ;
+    font-family: Verdana, Geneva, Tahoma, sans-serif ;
+    font-weight: bold ;
+}

@@ -11,21 +11,24 @@
     <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
+      <!-- where query buttons are held -->
     <div class = "row" >
         <div class="col-10 offset-1 mt-3">
             <div id = "buttonHolder" ></div>
         </div>
     </div>
     <br><br>
+    <!-- where the input and submit are for adding new query gif buttons -->
     <div class = "row">
         <div class="col-10 offset-1 mt-3">
         <form id = "gifInput">
             <label for="gifHere">Wanna see some other gifs? Add your button here!</label>
             <input type="text" placeholder = "Good Gifs Only" id = "gifHere">
-            <input type="submit" id = "addGif" value = "Add Your Gif Here!">
+            <input type="submit" id = "addGif" value = "Click When You Have A Good One">
         </form>
         </div>
     </div>  
+    <!-- where returned gifs are sent -->
     <div class="row">
         <div class = "col-12" id = "gifDump">
         </div>
@@ -36,62 +39,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script>
-
-        var originals = [ "Steph Curry" , "Michael Jordan" , "Klay Thompson" , "Draymond Green" , "Kevin Durant" , "Russell Westbrook"]
-
-// rewritten as arrow function
-        const ogButtons = () => {
-            $("#buttonHolder").empty()
-            for ( let i = 0 ; i < originals.length ; i++ ) {
-                $("#buttonHolder").append(`<button class = "btn btn-info btn-md mt-2 gifButtons">${originals[i]}</button> \n`)
-            }}
-
-// takes user input from the gifHere text form and adds it to the array of buttons, then calls the button making function
-        $("#addGif").on("click" , function(event) {
-            event.preventDefault()
-            var addGif = $("#gifHere").val()
-            originals.push(addGif)
-            ogButtons()
-            $("#gifHere").val("")
-        })
-
-// when any of the query gif buttons are clicked, generate 25 gifs related to that query
-        $("#buttonHolder").on("click" , ".gifButtons" , function(event) {
-            event.preventDefault()
-            $("#gifDump").empty()
-            var queryGif = $(this).text()
-            var queryUrl = `https://api.giphy.com/v1/gifs/search?api_key=zi9M3A782sRljdHyAC5XeD6Uzdb5jEtl&q=${queryGif}&limit=25&offset=0&rating=R&lang=en`
-            $.ajax({
-                url : queryUrl ,
-                method : "GET" 
-            }).then( function (result) {
-                console.log(result)
-                for ( let i = 0 ; i < result.data.length ; i++ ) {
-                    $("#gifDump").append(`<figure display = "inline" width = "350px" ><img src = "${result.data[i].images.original_still.url}" 
-                            data-still = "${result.data[i].images.original_still.url}" 
-                            data-animate = "${result.data[i].images.original.url}" 
-                            data-state = "still" height = "350px" width = "350px" class = "gif"> <figcaption width = "350px" > Rating : ${result.data[i].rating}</figcaption></figure>`)
-                } 
-                    
-            })
-        })
-
-// when any of the gifs are clicked on, swap its state between still/animated
-        $("#gifDump").on("click" , ".gif" , function(){
-            const state = $(this).attr("data-state")
-            if ( state === "still") {
-                $(this).attr("src", $(this).attr("data-animate"));
-                $(this).attr("data-state", "animate");
-            } else {
-                $(this).attr("src", $(this).attr("data-still"));
-                $(this).attr("data-state", "still");
-            }
-        })
-
-// call the original query gif buttons
-        ogButtons()
-
-    </script>
+    <script src="assets/js/index.js"></script>
   </body>
 </html>
