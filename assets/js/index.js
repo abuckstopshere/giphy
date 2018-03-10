@@ -5,7 +5,7 @@ var originals = [ "Steph Curry" , "Michael Jordan" , "Klay Thompson" , "Draymond
         const ogButtons = () => {
             $("#buttonHolder").empty()
             for ( let i = 0 ; i < originals.length ; i++ ) {
-                $("#buttonHolder").append(`<button class = "btn btn-info btn-md mt-2 gifButtons">${originals[i]}</button> \n`)
+                $("#buttonHolder").append(`<button class = "btn btn-md mt-2 mx-2 gifButtons">${originals[i]}</button> \n`)
             }}
 
 // takes user input from the gifHere text form and adds it to the array of buttons, then calls the button making function. prevents a button from being created on empty string
@@ -36,8 +36,7 @@ var originals = [ "Steph Curry" , "Michael Jordan" , "Klay Thompson" , "Draymond
                             data-still = "${result.data[i].images.original_still.url}" 
                             data-animate = "${result.data[i].images.original.url}" 
                             data-state = "still" height = "450px" width = "450px" class = "gif"><p class = "rating" >Rating : ${result.data[i].rating} </p></li>`)
-                } 
-                    
+                }
             })
         })
 
